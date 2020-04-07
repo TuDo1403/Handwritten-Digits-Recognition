@@ -2,13 +2,31 @@ import numpy as np
 from copy import deepcopy
 import scipy.optimize as op
 import matplotlib.pyplot as plt
-
     
-
 def rand_initial_weights(layer_in, layer_out, epsilon_init=0.12):
+    """ Randomly initialize the weights of a layer with L_in incoming connections and L_out outgoing connections
+
+        Parameters:
+        epsilon_init (float): Range where random values varies
+
+        Returns:
+        Theta (ndarray): A ndarray theta with random values in range epsilon
+
+    """
+    
     return np.random.rand(layer_out, layer_in+1) * 2*epsilon_init - epsilon_init
 
 def sigmoid(z):
+    """ Compute sigmoid function of z
+
+        Parameters: 
+        z (ndarray): z where z = X * Theta
+
+        Returns: 
+        g(z) (ndarray): Returning values
+
+    """
+
     return 1 / (1 + np.exp(-z))
 
 def sigmoid_gradient(z):
@@ -147,7 +165,7 @@ def nn_gradient(nn_params, X, y, nn_layers_info, lambda_reg=0):
 
 def fmincg(nn_params, X, y, nn_layers_info, lambda_reg):
     result = op.fmin_cg(f=nn_cost_function, x0=nn_params, maxiter=50, args=(X, y, nn_layers_info, lambda_reg), fprime=nn_gradient)
-    optimal_theta = result
+    optimal_theta = reshape_parameters(result, nn_layers_info)
     return optimal_theta
 
 def predict(thetas, X):
@@ -172,7 +190,7 @@ def gradient_decsend(nn_params, X, y, nn_layers_info, lambda_reg, alpha, iterati
             plt.pause(0.0001)
     if plot:        
         plt.show()
-    return optimal_thetas
+    return reshape_parameters(optimal_thetas, nn_layers_info)
 
 
     
