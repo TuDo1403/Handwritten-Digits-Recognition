@@ -26,11 +26,15 @@ nn_params = nn.unroll_parameters(thetas)
 
 ## Training neural network
 # optimal_thetas = nn.fmincg(nn_params, X, y, nn_layers_info, lambda_reg=0)                             # Using advanced algorithm fmincg
-optimal_thetas = nn.gradient_decsend(nn_params, X, y, nn_layers_info, lambda_reg, 0.53, 100, plot=True) # Handwirtten gradient descend
+optimal_thetas = nn.gradient_decsend(nn_params, X, y, nn_layers_info, lambda_reg, 0.53, 300, plot=True) # Handwritten gradient descend
 
 ## Predict - Compare result to training labels
 prediction = nn.predict(optimal_thetas, X)
 accuracy = np.mean(prediction == y) * 100
 print("# Training set accuracy: {}".format(accuracy))
+
+## Save trained weights
+if accuracy >= 90:
+    np.save("8x8_weights.npy", nn.unroll_parameters(optimal_thetas))
 
 

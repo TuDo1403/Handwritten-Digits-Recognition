@@ -30,9 +30,28 @@ def sigmoid(z):
     return 1 / (1 + np.exp(-z))
 
 def sigmoid_gradient(z):
+    """ Compute derivative of g(z) - sigmoid of z
+
+        Parameters:
+        z (ndarray): z where z = X * Theta
+
+        Returns:
+        g(z)' (ndarray): Returning values
+        
+    """
+
     return sigmoid(z) * (1 - sigmoid(z))
 
 def unroll_parameters(thetas):
+    """ Unroll list of ndarray thetas into 1d array
+
+        Parameters:
+        thetas (list/tupple): list of thetas weights
+
+        Returns:
+        nn_params (1d array): 1d array of thetas
+
+    """
     nn_params = np.array([])
     for theta in thetas:
         nn_params = np.append(nn_params, theta.flatten())
